@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Koperasi Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind = {
+        config: {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                ink: "#152238",
+                mist: "#f4f7fb",
+                ocean: "#2f6fed",
+                mint: "#0fa782",
+                ember: "#e86424",
+                plum: "#3a2d59"
+              }
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="bg-mist text-slate-800 antialiased transition-colors dark:bg-slate-950 dark:text-slate-100">
+    <section id="loginScreen" class="min-h-screen p-4">
+      <div class="mx-auto flex min-h-screen max-w-5xl items-center justify-center">
+        <div class="grid w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-300/50 dark:border-slate-800 dark:bg-slate-900 dark:shadow-black/40 lg:grid-cols-2">
+          <div class="relative hidden overflow-hidden bg-gradient-to-br from-ocean via-plum to-ink p-10 text-white lg:block">
+            <div class="absolute -right-8 -top-8 h-44 w-44 rounded-full bg-white/10 blur-2xl"></div>
+            <div class="absolute -bottom-12 left-0 h-56 w-56 rounded-full bg-mint/30 blur-2xl"></div>
+            <p class="font-heading text-sm uppercase tracking-[0.25em] text-slate-100/85">Koperasi Dashboard</p>
+            <h1 class="mt-4 font-heading text-4xl leading-tight">
+              Sistem Koperasi Admin-Only
+            </h1>
+            <p class="mt-6 max-w-sm text-sm text-slate-100/90">
+              Kelola nasabah, simpanan, pinjaman, angsuran, dan laporan bulanan dalam satu panel profesional.
+            </p>
+            <div class="mt-12 rounded-2xl border border-white/20 bg-white/10 p-4 text-sm backdrop-blur">
+              <p class="font-semibold">Akun awal:</p>
+              <p>Username: <span class="font-bold">admin</span></p>
+              <p>Password: <span class="font-bold">admin123</span></p>
+            </div>
+          </div>
+          <div class="p-8 sm:p-10">
+            <p class="font-heading text-sm uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
+              Login Admin
+            </p>
+            <h2 class="mt-3 font-heading text-3xl font-semibold text-ink dark:text-slate-100">
+              Masuk ke Dashboard
+            </h2>
+            <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              Akses wajib untuk admin. Tidak ada login nasabah.
+            </p>
+            <form id="loginForm" class="mt-8 space-y-4">
+              <label class="block text-sm">
+                <span class="mb-2 block font-semibold text-slate-700 dark:text-slate-200">Username</span>
+                <input
+                  id="loginUsername"
+                  type="text"
+                  required
+                  class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none ring-ocean transition focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                  placeholder="admin"
+                />
+              </label>
+              <label class="block text-sm">
+                <span class="mb-2 block font-semibold text-slate-700 dark:text-slate-200">Password</span>
+                <input
+                  id="loginPassword"
+                  type="password"
+                  required
+                  class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none ring-ocean transition focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                  placeholder="Masukkan password"
+                />
+              </label>
+              <p id="loginError" class="hidden rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300"></p>
+              <button
+                type="submit"
+                class="w-full rounded-xl bg-ocean px-4 py-3 font-semibold text-white transition hover:bg-blue-700"
+              >
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="appShell" class="hidden min-h-screen lg:flex">
+      <aside class="w-full border-b border-slate-200 bg-white px-4 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-72 lg:border-b-0 lg:border-r lg:px-5 lg:py-6">
+        <div class="flex items-center justify-between gap-3 lg:block">
+          <div>
+            <p class="font-heading text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">Koperasi Pro</p>
+            <h1 class="mt-1 font-heading text-xl font-bold text-ink dark:text-slate-100">Admin Dashboard</h1>
+          </div>
+          <button id="themeToggleMobile" class="rounded-xl border border-slate-300 p-2 text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden" type="button">
+            Tema
+          </button>
+        </div>
+        <nav class="mt-4 grid grid-cols-2 gap-2 lg:mt-8 lg:grid-cols-1">
+          <button data-view-btn="dashboard" class="nav-btn">Dashboard</button>
+          <button data-view-btn="nasabah" class="nav-btn">Kelola Nasabah</button>
+          <button data-view-btn="pinjaman" class="nav-btn">Pinjaman</button>
+          <button data-view-btn="export" class="nav-btn">Export</button>
+          <button data-view-btn="log" class="nav-btn">Aktivitas</button>
+        </nav>
+      </aside>
+
+      <div class="w-full lg:ml-72">
+        <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 py-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 sm:px-6 lg:px-10">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 id="pageTitle" class="font-heading text-2xl font-bold text-ink dark:text-slate-100">Dashboard</h2>
+              <p id="todayLabel" class="text-sm text-slate-500 dark:text-slate-400"></p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="themeToggle" class="hidden rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 lg:inline-flex" type="button">
+                Toggle Tema
+              </button>
+              <button id="logoutBtn" class="rounded-xl bg-ember px-3 py-2 text-sm font-semibold text-white transition hover:bg-orange-600" type="button">
+                Logout
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main class="space-y-6 px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
+          <section data-view="dashboard" class="view-panel">
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <article class="metric-card">
+                <p class="metric-title">Total Nasabah</p>
+                <p id="metricNasabah" class="metric-value">0</p>
+              </article>
+              <article class="metric-card">
+                <p class="metric-title">Total Simpanan</p>
+                <p id="metricSimpanan" class="metric-value">Rp0</p>
+              </article>
+              <article class="metric-card">
+                <p class="metric-title">Pinjaman Aktif</p>
+                <p id="metricPinjamanAktif" class="metric-value">Rp0</p>
+              </article>
+              <article class="metric-card">
+                <p class="metric-title">Total Angsuran</p>
+                <p id="metricAngsuran" class="metric-value">Rp0</p>
+              </article>
+            </div>
+            <div class="panel-card">
+              <div class="mb-4 flex items-center justify-between gap-3">
+                <h3 class="panel-title">Grafik Bulanan</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Simpanan, Pinjaman, Angsuran (12 bulan)</p>
+              </div>
+              <canvas id="monthlyChart" height="120"></canvas>
+            </div>
+          </section>
+
+          <section data-view="nasabah" class="view-panel hidden space-y-6">
+            <div class="panel-card">
+              <h3 class="panel-title">Tambah / Edit Nasabah</h3>
+              <form id="nasabahForm" class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <input id="nasabahNama" type="text" required placeholder="Nama lengkap" class="field-input" />
+                <input id="nasabahPekerjaan" type="text" required placeholder="Pekerjaan" class="field-input" />
+                <input id="nasabahHp" type="text" required placeholder="Telp / HP" class="field-input" />
+                <input id="nasabahAlamat" type="text" required placeholder="Alamat rumah" class="field-input md:col-span-2 xl:col-span-2" />
+                <label class="field-input text-xs text-slate-600 dark:text-slate-300">
+                  Foto profil (opsional)
+                  <input id="nasabahFoto" type="file" accept="image/*" class="mt-2 block w-full text-xs" />
+                </label>
+                <textarea id="nasabahJaminan" placeholder="Keterangan jaminan (opsional)" class="field-input min-h-20 md:col-span-2 xl:col-span-3"></textarea>
+                <div class="flex items-center gap-3 md:col-span-2 xl:col-span-3">
+                  <img id="nasabahFotoPreview" alt="Preview foto nasabah" class="hidden h-12 w-12 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700" />
+                  <button id="nasabahFotoResetBtn" type="button" class="btn-secondary hidden">Hapus Foto</button>
+                </div>
+                <button type="submit" class="btn-primary md:col-span-2 xl:col-span-3">Simpan Nasabah</button>
+              </form>
+              <p id="nasabahFormHint" class="mt-2 text-xs text-slate-500 dark:text-slate-400"></p>
+            </div>
+
+            <div class="panel-card">
+              <div class="grid gap-3 md:grid-cols-3">
+                <input id="nasabahSearch" type="text" class="field-input" placeholder="Cari nama / telp / pekerjaan..." />
+                <select id="nasabahStatusFilter" class="field-input">
+                  <option value="all">Semua Status</option>
+                  <option value="aktif">Aktif</option>
+                  <option value="nonaktif">Nonaktif</option>
+                </select>
+                <button id="nasabahResetBtn" type="button" class="btn-secondary">Reset Form</button>
+              </div>
+              <div class="table-wrap mt-4">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Profil</th>
+                      <th>Nama</th>
+                      <th>Pekerjaan</th>
+                      <th>Alamat Rumah</th>
+                      <th>Telp/HP</th>
+                      <th>Jaminan</th>
+                      <th>Status</th>
+                      <th>Dibuat</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="nasabahTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section data-view="simpanan" class="view-panel hidden space-y-6">
+            <div class="panel-card">
+              <h3 class="panel-title">Input Simpanan</h3>
+              <form id="simpananForm" class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+                <select id="simpananNasabah" class="field-input xl:col-span-2" required></select>
+                <select id="simpananJenis" class="field-input" required>
+                  <option value="pokok">Pokok</option>
+                  <option value="wajib">Wajib</option>
+                  <option value="sukarela">Sukarela</option>
+                </select>
+                <input id="simpananJumlah" type="number" min="0" class="field-input" placeholder="Jumlah" required />
+                <input id="simpananTanggal" type="date" class="field-input" required />
+                <button type="submit" class="btn-primary">Simpan</button>
+                <input id="simpananKeterangan" type="text" class="field-input xl:col-span-6" placeholder="Keterangan (opsional)" />
+              </form>
+            </div>
+
+            <div class="panel-card">
+              <div class="grid gap-3 md:grid-cols-4">
+                <select id="simpananFilterNasabah" class="field-input"></select>
+                <select id="simpananFilterJenis" class="field-input">
+                  <option value="all">Semua Jenis</option>
+                  <option value="pokok">Pokok</option>
+                  <option value="wajib">Wajib</option>
+                  <option value="sukarela">Sukarela</option>
+                </select>
+                <input id="simpananFilterMonth" type="month" class="field-input" />
+                <div class="flex gap-2">
+                  <button id="exportSimpananExcel" type="button" class="btn-secondary">Export Excel</button>
+                  <button id="exportSimpananPdf" type="button" class="btn-secondary">Export PDF</button>
+                </div>
+              </div>
+              <div class="table-wrap mt-4">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID Transaksi</th>
+                      <th>Nasabah</th>
+                      <th>Jenis</th>
+                      <th>Jumlah</th>
+                      <th>Tanggal</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="simpananTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section data-view="pinjaman" class="view-panel hidden space-y-6">
+            <div class="panel-card pinjaman-input-card">
+              <h3 class="panel-title">Input Pinjaman</h3>
+              <form id="pinjamanForm" class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-6">
+                <div class="nasabah-picker xl:col-span-2">
+                  <select id="pinjamanNasabah" class="hidden" required></select>
+                  <button id="pinjamanNasabahTrigger" type="button" class="field-input nasabah-picker-trigger">
+                    <span class="nasabah-picker-placeholder">Pilih nasabah aktif</span>
+                    <span class="nasabah-picker-chevron" aria-hidden="true">&#9662;</span>
+                  </button>
+                  <div id="pinjamanNasabahMenu" class="nasabah-picker-menu hidden"></div>
+                </div>
+                <input id="pinjamanJumlah" type="number" min="0" class="field-input" placeholder="Jumlah pinjaman" required />
+                <input id="pinjamanTenor" type="number" min="1" class="field-input" placeholder="Tenor (bulan)" required />
+                <input id="pinjamanBunga" type="number" min="0" step="0.1" class="field-input" placeholder="Bunga (%)" required />
+                <input id="pinjamanTanggal" type="date" class="field-input" required />
+                <button type="submit" class="btn-primary">Simpan Pinjaman</button>
+              </form>
+            </div>
+
+            <div class="panel-card">
+              <h3 class="panel-title">Catat Angsuran</h3>
+              <form id="angsuranForm" class="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+                <select id="angsuranPinjaman" class="field-input xl:col-span-2" required></select>
+                <input id="angsuranJumlah" type="number" min="0" class="field-input" placeholder="Jumlah angsuran" required />
+                <input id="angsuranTanggal" type="date" class="field-input" required />
+                <button type="submit" class="btn-primary">Simpan Angsuran</button>
+              </form>
+            </div>
+
+            <div class="panel-card">
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID Pinjaman</th>
+                      <th>Nasabah</th>
+                      <th>Pokok</th>
+                      <th>Bunga</th>
+                      <th>Total Tagihan</th>
+                      <th>Terbayar</th>
+                      <th>Status</th>
+                      <th>Tanggal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pinjamanTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="panel-card">
+              <h3 class="panel-title">Riwayat Angsuran</h3>
+              <div class="table-wrap mt-4">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>ID Angsuran</th>
+                      <th>ID Pinjaman</th>
+                      <th>Peminjam</th>
+                      <th>Cicilan Ke</th>
+                      <th>Jumlah</th>
+                      <th>Tanggal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="angsuranTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section data-view="export" class="view-panel hidden space-y-6">
+            <div class="panel-card">
+              <h3 class="panel-title">Export Laporan</h3>
+              <div class="mt-4 grid gap-3 md:grid-cols-4">
+                <select id="reportType" class="field-input">
+                  <option value="bulanan">Laporan Bulanan</option>
+                  <option value="nasabah">Per Nasabah</option>
+                  <option value="jenis">Per Jenis Simpanan</option>
+                </select>
+                <input id="reportMonth" type="month" class="field-input" />
+                <select id="reportRef" class="field-input"></select>
+                <div class="flex gap-2">
+                  <button id="exportReportExcel" type="button" class="btn-primary">Excel</button>
+                  <button id="exportReportPdf" type="button" class="btn-secondary">PDF</button>
+                </div>
+              </div>
+              <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                <p class="font-semibold">Desain Spreadsheet Final</p>
+                <p>Struktur sheet: <code>nasabah</code>, <code>simpanan</code>, <code>pinjaman</code>, <code>angsuran</code>, <code>admin</code>, <code>log</code>.</p>
+                <button id="exportAllSheetsBtn" type="button" class="btn-secondary mt-3">Export Semua Sheet (Excel)</button>
+              </div>
+            </div>
+          </section>
+
+          <section data-view="log" class="view-panel hidden">
+            <div class="panel-card">
+              <h3 class="panel-title">Log Aktivitas</h3>
+              <div class="table-wrap mt-4">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Waktu</th>
+                      <th>Aktivitas</th>
+                      <th>Entitas</th>
+                      <th>ID Ref</th>
+                    </tr>
+                  </thead>
+                  <tbody id="logTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
