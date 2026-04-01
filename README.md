@@ -56,7 +56,7 @@ Project ini sudah disiapkan untuk sinkronisasi database ke Google Sheets lewat W
 
 Kode tersebut sudah memakai Spreadsheet ID Anda:
 
-- `1HN26eNEsCbcs_yHW141mEUQYILu2NEBoA9JH092yomg`
+- `15rFEqZoJjjNGwcDnXhZTvDcgPApaJYV5hNZUPDbe84s`
 
 Saat pertama dipanggil, GAS otomatis membuat sheet + header:
 
