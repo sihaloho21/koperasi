@@ -1,4 +1,4 @@
-const SPREADSHEET_ID = "1HN26eNEsCbcs_yHW141mEUQYILu2NEBoA9JH092yomg";
+const SPREADSHEET_ID = "15rFEqZoJjjNGwcDnXhZTvDcgPApaJYV5hNZUPDbe84s";
 
 const TABLES = {
   nasabah: [
