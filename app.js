@@ -11,7 +11,6 @@
   const CLOUD_SYNC_DEBOUNCE_MS = 500;
   const CLOUD_FETCH_TIMEOUT_MS = 20000;
   // Isi URL Web App GAS hasil deploy (akhiran /exec) agar aplikasi sync ke Google Sheets.
-  const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbytAEkT-cJF1QGmUZEe6ZJgD5RIjH7RRKWE8lsNuCSXqSv4k_DMmKZsbRBSplgFDaTi/exec";
   const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyQIW-VhcSx5Pns0SsGJwnQUYetphKP8lJD3Id4gEqz6Ms97KQCYd-Dq_o0uoj5v1b6LQ/exec";
 
   const fmtCurrency = new Intl.NumberFormat("id-ID", {
